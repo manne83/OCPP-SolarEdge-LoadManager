@@ -145,6 +145,13 @@ class OCPPChargingPoint extends IPSModule
 
     public function RemoteStartTransaction(int $ConnectorId)
     {
+        // SolarEdge transmits a different IdTag in StartTransaction.
+        // Remember this Symcon-requested start briefly so it can be accepted safely.
+        $this->SetBuffer(
+            sprintf('PendingRemoteStart_%d', $ConnectorId),
+            (string) (time() + 30)
+        );
+
         $idTag = 'symcon';
         $this->send($this->getRemoteStartTransactionRequest($ConnectorId, $idTag));
     }
@@ -391,6 +398,26 @@ class OCPPChargingPoint extends IPSModule
 
     private function processStartTransaction(string $messageID, $payload)
     {
+        $pendingBufferName = sprintf('PendingRemoteStart_%d', $payload['connectorId']);
+        $pendingRemoteStartUntil = (int) $this->GetBuffer($pendingBufferName);
+
+        // A marker may only be used once, even if this transaction is rejected.
+        $this->SetBuffer($pendingBufferName, '0');
+
+        // SolarEdge replaces the IdTag used for RemoteStartTransaction with a
+        // null tag. Only accept it as Symcon's internal tag when Symcon issued
+        // a RemoteStartTransaction for this connector within the last 30 seconds.
+        if (
+            $this->GetValue('Vendor') === 'SolarEdge'
+            && $pendingRemoteStartUntil >= time()
+            && (
+                $payload['idTag'] === ''
+                || preg_match('/^0+$/', (string) $payload['idTag']) === 1
+            )
+        ) {
+            $payload['idTag'] = 'symcon';
+        }
+
         $ident = sprintf('Transaction_%d', $payload['connectorId']);
         $this->RegisterVariableBoolean($ident, sprintf($this->Translate('Transaction (Connector %d)'), $payload['connectorId']), [
             'PRESENTATION' => VARIABLE_PRESENTATION_VALUE_PRESENTATION,
