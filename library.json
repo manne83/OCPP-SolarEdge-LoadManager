@@ -1,8 +1,8 @@
 {
-    "id": "{80EFBF49-B7BC-F614-CE70-A2C25D354D23}",
-    "name": "OCPP Central System",
-    "author": "Symcon GmbH",
-    "url": "https://github.com/symcon/OCPP",
+    "id": "{D4975C8E-B1EB-4801-B91F-1BD930C4FA29}",
+    "name": "OCPP SolarEdge Load Manager",
+    "author": "manne83",
+    "url": "https://github.com/manne83/OCPP-SolarEdge-LoadManager",
     "compatibility": {
         "version": "8.0"
     },

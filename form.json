@@ -1,0 +1,104 @@
+{
+    "elements": [
+        {
+            "caption": "Charge Point Identity",
+            "name": "ChargePointIdentity",
+            "type": "ValidationTextBox"
+        },
+        {
+            "type": "Select",
+            "name": "ValidateIdTag",
+            "width": "608px",
+            "caption": "Start transaction...",
+            "options": [
+                {
+                    "caption": "... automatically on connection",
+                    "value": -1
+                },
+                {
+                    "caption": "... when an Id Tag is validated - Allow all Id Tags",
+                    "value": 0
+                },
+                {
+                    "caption": "... when an Id Tag is validated - Allow only Central Id Tag list",
+                    "value": 1
+                },
+                {
+                    "caption": "... when an Id Tag is validated - Allow only Local Id Tag list",
+                    "value": 2
+                },
+                {
+                    "caption": "... when an Id Tag is validated - Allow both Id Tag lists",
+                    "value": 3
+                }
+            ],
+            "onChange": "OCPPLM_UIUpdateCP($id, $ValidateIdTag);"
+        },
+        {
+            "type": "List",
+            "name": "ValidIdTagList",
+            "caption": "Local list of valid Id Tags (e.g. RFID cards)",
+            "add": true,
+            "delete": true,
+            "sort": {
+                "column": "IdTag",
+                "direction": "ascending"
+            },
+            "columns": [
+                {
+                    "caption": "Id Tag",
+                    "name": "IdTag",
+                    "width": "150px",
+                    "add": "",
+                    "edit": {
+                        "type": "ValidationTextBox"
+                    }
+                },
+                {
+                    "caption": "First Name",
+                    "name": "FirstName",
+                    "width": "150px",
+                    "add": "",
+                    "edit": {
+                        "type": "ValidationTextBox"
+                    }
+                },
+                {
+                    "caption": "Last Name",
+                    "name": "LastName",
+                    "width": "150px",
+                    "add": "",
+                    "edit": {
+                        "type": "ValidationTextBox"
+                    }
+                },
+                {
+                    "caption": "E-Mail",
+                    "name": "EMail",
+                    "width": "150px",
+                    "add": "",
+                    "edit": {
+                        "type": "ValidationTextBox"
+                    }
+                },
+                {
+                    "caption": "Information",
+                    "name": "Information",
+                    "width": "auto",
+                    "add": "",
+                    "edit": {
+                        "type": "ValidationTextBox"
+                    }
+                }
+            ]
+        }
+    ],
+    "actions": [
+        {
+            "type": "Button",
+            "caption": "Update",
+            "onClick": "OCPPLM_Update($id);"
+        }
+    ],
+    "status": []
+}
