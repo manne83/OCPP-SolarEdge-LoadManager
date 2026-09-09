@@ -5,7 +5,7 @@ declare(strict_types=1);
 include_once __DIR__ . '/../libs/OCPPConstants.php';
 include_once __DIR__ . '/../libs/WebHookModule.php';
 
-class OCPPSplitter extends WebHookModule
+class OCPPSolarEdgeSplitter extends OCPPSolarEdgeWebHookModule
 {
     public function __construct($InstanceID)
     {
@@ -75,14 +75,14 @@ class OCPPSplitter extends WebHookModule
 
         // At the moment we do not process any CALLRESULT/CALLERROR messages
         // Only TriggerMessage results will get them, and we do not process it for now
-        if ($message[0] != CALL) {
+        if ($message[0] != OCPPLM_CALL) {
             $this->SendDebug('Skipping', print_r($message, true), 0);
             return;
         }
 
         // Send it to the children
         $responses = $this->SendDataToChildren(json_encode([
-            'DataID'              => '{54E04042-D715-71A0-BA80-ADD8B6CDF151}',
+            'DataID'              => '{EDFD035D-B301-43F3-9748-4352575D975C}',
             'ChargePointIdentity' => $chargePointIdentity,
             'Message'             => $message
         ]));
@@ -128,7 +128,7 @@ class OCPPSplitter extends WebHookModule
     private function getBootNotificationResponse(string $messageID)
     {
         return [
-            CALLRESULT,
+            OCPPLM_CALLRESULT,
             $messageID,
             [
                 'status'      => 'Accepted',

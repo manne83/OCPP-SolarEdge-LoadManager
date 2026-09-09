@@ -1,16 +1,16 @@
 {
-    "id": "{C7E6CEB8-D0B7-52D2-72E7-DE8D35FD7069}",
-    "name": "OCPP Configurator",
+    "id": "{BE1781F7-CF02-473C-8CE1-F08DD16BCAEC}",
+    "name": "OCPP SolarEdge Configurator",
     "type": 4,
     "vendor": "",
     "aliases": [],
     "parentRequirements": [
-        "{8B051B38-91B7-97B3-2F99-BCB86C0925FA}"
+        "{40F93BDC-25EB-429F-8131-D1013662DA35}"
     ],
     "childRequirements": [],
     "implemented": [
-        "{54E04042-D715-71A0-BA80-ADD8B6CDF151}"
+        "{EDFD035D-B301-43F3-9748-4352575D975C}"
     ],
-    "prefix": "OCPP",
+    "prefix": "OCPPLM",
     "url": "https://www.symcon.de/en/service/documentation/module-reference/ocpp/"
 }

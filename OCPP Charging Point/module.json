@@ -1,16 +1,16 @@
 {
-    "id": "{2EDDBD05-F295-3A79-00BD-B2FC0F107134}",
-    "name": "OCPP Charging Point",
+    "id": "{DF1FBC0B-8E0D-4D2C-B39F-C52C6D44CEEC}",
+    "name": "OCPP SolarEdge Charging Point",
     "type": 3,
     "vendor": "",
     "aliases": [],
     "parentRequirements": [
-        "{8B051B38-91B7-97B3-2F99-BCB86C0925FA}"
+        "{40F93BDC-25EB-429F-8131-D1013662DA35}"
     ],
     "childRequirements": [],
     "implemented": [
-        "{54E04042-D715-71A0-BA80-ADD8B6CDF151}"
+        "{EDFD035D-B301-43F3-9748-4352575D975C}"
     ],
-    "prefix": "OCPP",
+    "prefix": "OCPPLM",
     "url": "https://www.symcon.de/en/service/documentation/module-reference/ocpp/"
 }

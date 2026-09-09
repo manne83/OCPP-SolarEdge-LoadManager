@@ -32,7 +32,7 @@
                     "value": 3
                 }
             ],
-            "onChange": "OCPP_UIUpdateCP($id, $ValidateIdTag);"
+            "onChange": "OCPPLM_UIUpdateCP($id, $ValidateIdTag);"
         },
         {
             "type": "List",
@@ -97,7 +97,7 @@
         {
             "type": "Button",
             "caption": "Update",
-            "onClick": "OCPP_Update($id);"
+            "onClick": "OCPPLM_Update($id);"
         }
     ],
     "status": []

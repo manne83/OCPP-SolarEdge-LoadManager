@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 include_once __DIR__ . '/../libs/OCPPConstants.php';
 
-class OCPPChargingPoint extends IPSModule
+class OCPPSolarEdgeChargingPoint extends IPSModule
 {
 
     private const START_AUTOMATIC = -1;
@@ -240,7 +240,7 @@ class OCPPChargingPoint extends IPSModule
     {
         $this->SendDebug('Transmitted', json_encode($message), 0);
         $this->SendDataToParent(json_encode([
-            'DataID'              => '{8B051B38-91B7-97B3-2F99-BCB86C0925FA}',
+            'DataID'              => '{40F93BDC-25EB-429F-8131-D1013662DA35}',
             'ChargePointIdentity' => $this->ReadPropertyString('ChargePointIdentity'),
             'Message'             => $message
         ]));
@@ -254,7 +254,7 @@ class OCPPChargingPoint extends IPSModule
          * StopTransaction.conf
          */
         return [
-            CALLRESULT,
+            OCPPLM_CALLRESULT,
             $messageID,
             [
                 'idTagInfo' => [
@@ -273,7 +273,7 @@ class OCPPChargingPoint extends IPSModule
          */
 
         return [
-            CALLRESULT,
+            OCPPLM_CALLRESULT,
             $messageID,
             [
                 'idTagInfo' => [
@@ -292,7 +292,7 @@ class OCPPChargingPoint extends IPSModule
          * MeterValues.conf
          */
         return [
-            CALLRESULT,
+            OCPPLM_CALLRESULT,
             $messageID,
             new stdClass()
         ];
@@ -306,7 +306,7 @@ class OCPPChargingPoint extends IPSModule
          * StatusNotification.conf
          */
         return [
-            CALLRESULT,
+            OCPPLM_CALLRESULT,
             $messageID,
             new stdClass()
         ];
@@ -320,7 +320,7 @@ class OCPPChargingPoint extends IPSModule
          * Heartbeat.conf
          */
         return [
-            CALLRESULT,
+            OCPPLM_CALLRESULT,
             $messageID,
             [
                 'currentTime' => date(DateTime::ATOM)
@@ -558,7 +558,7 @@ class OCPPChargingPoint extends IPSModule
          * DataTransfer.conf
          */
         return [
-            CALLRESULT,
+            OCPPLM_CALLRESULT,
             $messageID,
             [
                 'status' => $status
@@ -574,7 +574,7 @@ class OCPPChargingPoint extends IPSModule
          * Authorize.conf
          */
         return [
-            CALLRESULT,
+            OCPPLM_CALLRESULT,
             $messageID,
             [
                 'idTagInfo' => [
@@ -602,7 +602,7 @@ class OCPPChargingPoint extends IPSModule
          * TriggerMessage.req
          */
         return [
-            CALL,
+            OCPPLM_CALL,
             $this->generateMessageID(),
             'TriggerMessage',
             [
@@ -619,7 +619,7 @@ class OCPPChargingPoint extends IPSModule
          * RemoteStartTransaction.req
          */
         return [
-            CALL,
+            OCPPLM_CALL,
             $this->generateMessageID(),
             'RemoteStartTransaction',
             [
@@ -637,7 +637,7 @@ class OCPPChargingPoint extends IPSModule
          * RemoteStopTransaction.req
          */
         return [
-            CALL,
+            OCPPLM_CALL,
             $this->generateMessageID(),
             'RemoteStopTransaction',
             [
@@ -654,7 +654,7 @@ class OCPPChargingPoint extends IPSModule
          * ChangeAvailability.req
          */
         return [
-            CALL,
+            OCPPLM_CALL,
             $this->generateMessageID(),
             'ChangeAvailability',
             [

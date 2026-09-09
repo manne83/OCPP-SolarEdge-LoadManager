@@ -10,7 +10,7 @@ if (!defined('KR_READY')) {
     define('KR_READY', 10103);
 }
 
-class WebHookModule extends IPSModule
+class OCPPSolarEdgeWebHookModule extends IPSModule
 {
     private $hook = '';
 

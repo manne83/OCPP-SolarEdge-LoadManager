@@ -1,16 +1,16 @@
 {
-    "id": "{D048F0F0-0015-E50B-E8EC-731998FDFDA8}",
-    "name": "OCPP Splitter",
+    "id": "{EFDF5F8D-3F73-43C6-ABDA-FD19C92B6858}",
+    "name": "OCPP SolarEdge Splitter",
     "type": 2,
     "vendor": "",
     "aliases": [],
     "parentRequirements": [],
     "childRequirements": [
-        "{54E04042-D715-71A0-BA80-ADD8B6CDF151}"
+        "{EDFD035D-B301-43F3-9748-4352575D975C}"
     ],
     "implemented": [
-        "{8B051B38-91B7-97B3-2F99-BCB86C0925FA}"
+        "{40F93BDC-25EB-429F-8131-D1013662DA35}"
     ],
-    "prefix": "OCPP",
+    "prefix": "OCPPLM",
     "url": "https://www.symcon.de/en/service/documentation/module-reference/ocpp/"
 }
