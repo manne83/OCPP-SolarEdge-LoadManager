@@ -58,6 +58,14 @@ class OCPPSolarEdgeChargingPoint extends IPSModule
     {
         $message = json_decode($JSONString, true);
         $this->SendDebug('Received', json_encode($message['Message']), 0);
+
+        // Replies to commands sent by the central system use CALLRESULT or
+        // CALLERROR and do not contain a message type at index 2.
+        if (($message['Message'][0] ?? null) !== OCPPLM_CALL) {
+            $this->processCommandResponse($message['Message']);
+            return '';
+        }
+
         $messageID = $message['Message'][1];
         $messageType = $message['Message'][2];
         $payload = $message['Message'][3];
@@ -174,9 +182,110 @@ class OCPPSolarEdgeChargingPoint extends IPSModule
         }
     }
 
+    public function SetChargingLimit(int $ConnectorId, float $LimitAmpere, int $NumberPhases = 3): string
+    {
+        if ($ConnectorId < 1) {
+            throw new InvalidArgumentException('ConnectorId must be greater than 0');
+        }
+        if ($LimitAmpere < 6.0 || $LimitAmpere > 80.0) {
+            throw new InvalidArgumentException('Charging limit must be between 6 and 80 A');
+        }
+        if ($NumberPhases < 1 || $NumberPhases > 3) {
+            throw new InvalidArgumentException('NumberPhases must be between 1 and 3');
+        }
+
+        $messageID = $this->generateMessageID();
+        $this->SetBuffer('PendingCall_' . $messageID, json_encode([
+            'Action'      => 'SetChargingProfile',
+            'ConnectorId' => $ConnectorId,
+            'Limit'       => round($LimitAmpere, 1)
+        ]));
+
+        $this->SetBuffer('ChargingProfileState_' . $ConnectorId, json_encode([
+            'Status' => 'Pending',
+            'Limit'  => round($LimitAmpere, 1)
+        ]));
+
+        $this->send($this->getSetChargingProfileRequest(
+            $messageID,
+            $ConnectorId,
+            round($LimitAmpere, 1),
+            $NumberPhases
+        ));
+
+        return $messageID;
+    }
+
+    public function ClearChargingLimit(int $ConnectorId): string
+    {
+        if ($ConnectorId < 1) {
+            throw new InvalidArgumentException('ConnectorId must be greater than 0');
+        }
+
+        $messageID = $this->generateMessageID();
+        $this->SetBuffer('PendingCall_' . $messageID, json_encode([
+            'Action'      => 'ClearChargingProfile',
+            'ConnectorId' => $ConnectorId
+        ]));
+
+        $this->SetBuffer('ChargingProfileState_' . $ConnectorId, json_encode([
+            'Status' => 'Pending',
+            'Limit'  => null
+        ]));
+        $this->send($this->getClearChargingProfileRequest($messageID, $ConnectorId));
+
+        return $messageID;
+    }
+
+    public function GetChargingProfileState(int $ConnectorId): string
+    {
+        $state = json_decode($this->GetBuffer('ChargingProfileState_' . $ConnectorId), true);
+        if (!is_array($state)) {
+            $state = ['Status' => '', 'Limit' => null];
+        }
+        return json_encode($state);
+    }
+
     public function UIUpdateCP(int $ValidateIdTag)
     {
         $this->UpdateFormField('ValidIdTagList', 'visible', in_array($ValidateIdTag, [self::START_ID_LOCAL, self::START_ID_BOTH]));
+    }
+
+    private function processCommandResponse(array $message): void
+    {
+        $messageType = $message[0] ?? null;
+        $messageID = (string) ($message[1] ?? '');
+        if ($messageID === '') {
+            return;
+        }
+
+        $bufferName = 'PendingCall_' . $messageID;
+        $pending = json_decode($this->GetBuffer($bufferName), true);
+        if (!is_array($pending)) {
+            return;
+        }
+        $this->SetBuffer($bufferName, '');
+
+        $connectorId = (int) ($pending['ConnectorId'] ?? 1);
+
+        if ($messageType === OCPPLM_CALLERROR) {
+            $errorCode = (string) ($message[2] ?? 'CallError');
+            $errorDescription = (string) ($message[3] ?? '');
+            $this->SetBuffer('ChargingProfileState_' . $connectorId, json_encode([
+                'Status' => trim($errorCode . ': ' . $errorDescription),
+                'Limit'  => $pending['Limit'] ?? null
+            ]));
+            return;
+        }
+
+        $payload = $message[2] ?? [];
+        $status = is_array($payload) && isset($payload['status'])
+            ? (string) $payload['status']
+            : 'InvalidResponse';
+        $this->SetBuffer('ChargingProfileState_' . $connectorId, json_encode([
+            'Status' => $status,
+            'Limit'  => $pending['Limit'] ?? null
+        ]));
     }
 
     private function getIdTagStatus($idTag)
@@ -642,6 +751,49 @@ class OCPPSolarEdgeChargingPoint extends IPSModule
             'RemoteStopTransaction',
             [
                 'transactionId' => $transactionId
+            ]
+        ];
+    }
+
+    private function getSetChargingProfileRequest(string $messageID, int $connectorId, float $limitAmpere, int $numberPhases)
+    {
+        return [
+            OCPPLM_CALL,
+            $messageID,
+            'SetChargingProfile',
+            [
+                'connectorId'        => $connectorId,
+                'csChargingProfiles' => [
+                    'chargingProfileId'      => 910000 + $connectorId,
+                    'stackLevel'             => 0,
+                    'chargingProfilePurpose' => 'TxDefaultProfile',
+                    'chargingProfileKind'    => 'Absolute',
+                    'chargingSchedule'       => [
+                        'startSchedule'         => date(DateTime::ATOM),
+                        'chargingRateUnit'      => 'A',
+                        'chargingSchedulePeriod' => [
+                            [
+                                'startPeriod' => 0,
+                                'limit'       => $limitAmpere,
+                                'numberPhases' => $numberPhases
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ];
+    }
+
+    private function getClearChargingProfileRequest(string $messageID, int $connectorId)
+    {
+        return [
+            OCPPLM_CALL,
+            $messageID,
+            'ClearChargingProfile',
+            [
+                'connectorId'             => $connectorId,
+                'chargingProfilePurpose'  => 'TxDefaultProfile',
+                'stackLevel'              => 0
             ]
         ];
     }
