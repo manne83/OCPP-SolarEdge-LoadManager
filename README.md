@@ -58,3 +58,6 @@ wieder erhöhen könnte.
 
 Hinweis: OCPP 1.6 definiert Smart Charging, die Funktion ist bei Ladestationen jedoch
 optional. Deshalb ist der praktische Test jeder einzelnen Wallbox zwingend vorgesehen.
+
+Vor dem Zusammenführen einer neuen Version müssen die GitHub-Actions `Check Style`
+und `Run Tests` erfolgreich abgeschlossen sein.
