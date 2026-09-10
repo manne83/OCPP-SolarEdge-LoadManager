@@ -631,7 +631,7 @@ class OCPPSolarEdgeChargingPoint extends IPSModule
 
         // Return consumption data to properly forward it to the splitter
         return [
-            'IdTag'      => $this->GetValue(sprintf('Transaction_ID_Tag_%d', $connectorId)),
+            'IdTag'       => $this->GetValue(sprintf('Transaction_ID_Tag_%d', $connectorId)),
             'Consumption' => $this->GetValue(sprintf('TransactionConsumption_%d', $connectorId)),
         ];
     }
