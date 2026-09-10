@@ -73,10 +73,14 @@ class OCPPSolarEdgeSplitter extends OCPPSolarEdgeWebHookModule
 
         $message = json_decode($message);
 
-        // At the moment we do not process any CALLRESULT/CALLERROR messages
-        // Only TriggerMessage results will get them, and we do not process it for now
+        // Forward replies to the matching charging point as well. This is
+        // required to verify whether Smart Charging commands were accepted.
         if ($message[0] != OCPPLM_CALL) {
-            $this->SendDebug('Skipping', print_r($message, true), 0);
+            $this->SendDataToChildren(json_encode([
+                'DataID'              => '{EDFD035D-B301-43F3-9748-4352575D975C}',
+                'ChargePointIdentity' => $chargePointIdentity,
+                'Message'             => $message
+            ]));
             return;
         }
 
