@@ -6,7 +6,6 @@ include_once __DIR__ . '/../libs/OCPPConstants.php';
 
 class OCPPSolarEdgeChargingPoint extends IPSModule
 {
-
     private const START_AUTOMATIC = -1;
     private const START_ID_ALL = 0;
     private const START_ID_CENTRAL = 1;
@@ -70,7 +69,7 @@ class OCPPSolarEdgeChargingPoint extends IPSModule
         $messageType = $message['Message'][2];
         $payload = $message['Message'][3];
 
-        $result = "";
+        $result = '';
         switch ($messageType) {
             case 'BootNotification':
                 $this->SetValue('Vendor', $payload['chargePointVendor']);
@@ -135,13 +134,14 @@ class OCPPSolarEdgeChargingPoint extends IPSModule
         return json_encode($form);
     }
 
-    public function Migrate($configurationDataString) {
+    public function Migrate(string $configurationDataString): string
+    {
         $configurationData = json_decode($configurationDataString, true);
         if (isset($configurationData['configuration']['AutoStartTransaction']) && $configurationData['configuration']['AutoStartTransaction']) {
             $configurationData['configuration']['ValidateIdTag'] = self::START_AUTOMATIC;
             return json_encode($configurationData);
         }
-        return "";
+        return '';
     }
 
     public function Update()
@@ -631,8 +631,8 @@ class OCPPSolarEdgeChargingPoint extends IPSModule
 
         // Return consumption data to properly forward it to the splitter
         return [
-            "IdTag" => $this->GetValue(sprintf('Transaction_ID_Tag_%d', $connectorId)),
-            "Consumption" => $this->GetValue(sprintf('TransactionConsumption_%d', $connectorId)),
+            'IdTag'      => $this->GetValue(sprintf('Transaction_ID_Tag_%d', $connectorId)),
+            'Consumption' => $this->GetValue(sprintf('TransactionConsumption_%d', $connectorId)),
         ];
     }
 
