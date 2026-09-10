@@ -769,12 +769,12 @@ class OCPPSolarEdgeChargingPoint extends IPSModule
                     'chargingProfilePurpose' => 'TxDefaultProfile',
                     'chargingProfileKind'    => 'Absolute',
                     'chargingSchedule'       => [
-                        'startSchedule'         => date(DateTime::ATOM),
-                        'chargingRateUnit'      => 'A',
+                        'startSchedule'          => date(DateTime::ATOM),
+                        'chargingRateUnit'       => 'A',
                         'chargingSchedulePeriod' => [
                             [
-                                'startPeriod' => 0,
-                                'limit'       => $limitAmpere,
+                                'startPeriod'  => 0,
+                                'limit'        => $limitAmpere,
                                 'numberPhases' => $numberPhases
                             ]
                         ]
