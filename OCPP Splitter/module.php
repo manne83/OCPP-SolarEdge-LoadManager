@@ -53,10 +53,10 @@ class OCPPSolarEdgeSplitter extends OCPPSolarEdgeWebHookModule
     {
         $message = file_get_contents('php://input');
 
-        $this->SendDebug("Data", $message, 0);
+        $this->SendDebug('Data', $message, 0);
 
         if (!$message) {
-            echo "Please use WebSockets and send a valid OCPP message!";
+            echo 'Please use WebSockets and send a valid OCPP message!';
             return;
         }
 
@@ -92,11 +92,11 @@ class OCPPSolarEdgeSplitter extends OCPPSolarEdgeWebHookModule
         ]));
 
         // We want to check the response, if a charging was completed and we need to collect the charging data
-        foreach($responses as $response) {
+        foreach ($responses as $response) {
             $data = json_decode($response, true);
 
-            $ident = sprintf("Consumption_%s", $data['IdTag']);
-            $idTag = $data['IdTag'] ? sprintf('IdTag %s', $data['IdTag']) : "No IdTag";
+            $ident = sprintf('Consumption_%s', $data['IdTag']);
+            $idTag = $data['IdTag'] ? sprintf('IdTag %s', $data['IdTag']) : 'No IdTag';
             $this->RegisterVariableInteger($ident, sprintf($this->Translate('Consumption (%s)'), $idTag), [
                 'PRESENTATION' => VARIABLE_PRESENTATION_VALUE_PRESENTATION,
                 'SUFFIX'       => ' Wh'
