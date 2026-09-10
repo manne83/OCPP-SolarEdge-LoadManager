@@ -1,0 +1,167 @@
+{
+    "elements": [
+        {
+            "type": "CheckBox",
+            "name": "Enabled",
+            "caption": "Enable automatic load management"
+        },
+        {
+            "type": "Select",
+            "name": "Mode",
+            "caption": "Operating mode",
+            "options": [
+                {
+                    "caption": "Full power with FIFO queue",
+                    "value": 0
+                },
+                {
+                    "caption": "Dynamic current sharing with FIFO admission",
+                    "value": 1
+                }
+            ]
+        },
+        {
+            "type": "NumberSpinner",
+            "name": "GridLimit",
+            "caption": "Maximum total current",
+            "suffix": " A",
+            "minimum": 6,
+            "maximum": 200,
+            "digits": 1
+        },
+        {
+            "type": "NumberSpinner",
+            "name": "SafetyReserve",
+            "caption": "Safety reserve",
+            "suffix": " A",
+            "minimum": 0,
+            "maximum": 20,
+            "digits": 1
+        },
+        {
+            "type": "NumberSpinner",
+            "name": "MinimumCurrent",
+            "caption": "Minimum current per charging vehicle",
+            "suffix": " A",
+            "minimum": 6,
+            "maximum": 16,
+            "digits": 1
+        },
+        {
+            "type": "NumberSpinner",
+            "name": "MaximumCurrent",
+            "caption": "Maximum current per charging vehicle",
+            "suffix": " A",
+            "minimum": 6,
+            "maximum": 32,
+            "digits": 1
+        },
+        {
+            "type": "NumberSpinner",
+            "name": "ConnectorId",
+            "caption": "Connector ID",
+            "minimum": 1,
+            "maximum": 8
+        },
+        {
+            "type": "NumberSpinner",
+            "name": "NumberPhases",
+            "caption": "Number of phases",
+            "minimum": 1,
+            "maximum": 3
+        },
+        {
+            "type": "Label",
+            "caption": "For safety, enable a wallbox only after its 6 A Smart Charging test returned Accepted."
+        },
+        {
+            "type": "NumberSpinner",
+            "name": "TestInstanceID",
+            "caption": "Charging point instance for test",
+            "minimum": 1
+        },
+        {
+            "type": "List",
+            "name": "Wallboxes",
+            "caption": "Managed wallboxes",
+            "rowCount": 10,
+            "add": true,
+            "delete": true,
+            "sort": {
+                "column": "Name",
+                "direction": "ascending"
+            },
+            "columns": [
+                {
+                    "caption": "Enabled",
+                    "name": "Enabled",
+                    "width": "90px",
+                    "add": false,
+                    "edit": {
+                        "type": "CheckBox"
+                    }
+                },
+                {
+                    "caption": "Instance ID",
+                    "name": "InstanceID",
+                    "width": "130px",
+                    "add": 0,
+                    "edit": {
+                        "type": "NumberSpinner",
+                        "minimum": 1
+                    }
+                },
+                {
+                    "caption": "Name",
+                    "name": "Name",
+                    "width": "auto",
+                    "add": "Wallbox",
+                    "edit": {
+                        "type": "ValidationTextBox"
+                    }
+                },
+                {
+                    "caption": "6 A test Accepted",
+                    "name": "SmartChargingVerified",
+                    "width": "160px",
+                    "add": false,
+                    "edit": {
+                        "type": "CheckBox"
+                    }
+                }
+            ]
+        }
+    ],
+    "actions": [
+        {
+            "type": "Label",
+            "caption": "Smart Charging safety test"
+        },
+        {
+            "type": "Button",
+            "caption": "Send 6 A test limit",
+            "onClick": "OCPPLMCTRL_TestChargingLimit($id, 6.0);"
+        },
+        {
+            "type": "Button",
+            "caption": "Start test charging",
+            "onClick": "OCPPLMCTRL_StartTestCharging($id);"
+        },
+        {
+            "type": "Button",
+            "caption": "Stop test charging",
+            "onClick": "OCPPLMCTRL_StopTestCharging($id);"
+        },
+        {
+            "type": "Button",
+            "caption": "Restore 16 A test limit",
+            "onClick": "OCPPLMCTRL_TestChargingLimit($id, 16.0);"
+        },
+        {
+            "type": "Button",
+            "caption": "Run control cycle now",
+            "onClick": "OCPPLMCTRL_Run($id);"
+        }
+    ],
+    "status": []
+}

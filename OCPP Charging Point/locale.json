@@ -26,6 +26,8 @@
             "Last Name": "Nachname",
             "E-Mail": "E-Mail",
             "Last Id Tag": "Letzter Id Tag",
+            "Charging limit (Connector %d)": "Ladegrenze (Anschluss %d)",
+            "Charging profile status (Connector %d)": "Status Ladeprofil (Anschluss %d)",
             "Start transaction...": "Transaktion starten...",
             "... automatically on connection": "... automatisch bei Verbindung",
             "... when an Id Tag is validated - Allow all Id Tags": "... wenn ein Id Tag validiert wird - Alle Id Tags erlauben",

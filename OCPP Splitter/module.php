@@ -53,10 +53,10 @@ class OCPPSolarEdgeSplitter extends OCPPSolarEdgeWebHookModule
     {
         $message = file_get_contents('php://input');
 
-        $this->SendDebug("Data", $message, 0);
+        $this->SendDebug('Data', $message, 0);
 
         if (!$message) {
-            echo "Please use WebSockets and send a valid OCPP message!";
+            echo 'Please use WebSockets and send a valid OCPP message!';
             return;
         }
 
@@ -73,10 +73,14 @@ class OCPPSolarEdgeSplitter extends OCPPSolarEdgeWebHookModule
 
         $message = json_decode($message);
 
-        // At the moment we do not process any CALLRESULT/CALLERROR messages
-        // Only TriggerMessage results will get them, and we do not process it for now
+        // Forward replies to the matching charging point as well. This is
+        // required to verify whether Smart Charging commands were accepted.
         if ($message[0] != OCPPLM_CALL) {
-            $this->SendDebug('Skipping', print_r($message, true), 0);
+            $this->SendDataToChildren(json_encode([
+                'DataID'              => '{EDFD035D-B301-43F3-9748-4352575D975C}',
+                'ChargePointIdentity' => $chargePointIdentity,
+                'Message'             => $message
+            ]));
             return;
         }
 
@@ -88,11 +92,11 @@ class OCPPSolarEdgeSplitter extends OCPPSolarEdgeWebHookModule
         ]));
 
         // We want to check the response, if a charging was completed and we need to collect the charging data
-        foreach($responses as $response) {
+        foreach ($responses as $response) {
             $data = json_decode($response, true);
 
-            $ident = sprintf("Consumption_%s", $data['IdTag']);
-            $idTag = $data['IdTag'] ? sprintf('IdTag %s', $data['IdTag']) : "No IdTag";
+            $ident = sprintf('Consumption_%s', $data['IdTag']);
+            $idTag = $data['IdTag'] ? sprintf('IdTag %s', $data['IdTag']) : 'No IdTag';
             $this->RegisterVariableInteger($ident, sprintf($this->Translate('Consumption (%s)'), $idTag), [
                 'PRESENTATION' => VARIABLE_PRESENTATION_VALUE_PRESENTATION,
                 'SUFFIX'       => ' Wh'
