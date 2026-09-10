@@ -1,0 +1,14 @@
+{
+    "id": "{AD171130-CA68-4530-86F0-5F7332F0CCAD}",
+    "name": "OCPP SolarEdge Load Manager Controller",
+    "type": 3,
+    "vendor": "SolarEdge",
+    "aliases": [
+        "OCPP 50A Load Manager"
+    ],
+    "parentRequirements": [],
+    "childRequirements": [],
+    "implemented": [],
+    "prefix": "OCPPLMCTRL",
+    "url": "https://github.com/manne83/OCPP-SolarEdge-LoadManager"
+}

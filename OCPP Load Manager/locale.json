@@ -1,0 +1,34 @@
+{
+    "translations": {
+        "de": {
+            "Enable automatic load management": "Automatisches Lastmanagement aktivieren",
+            "Operating mode": "Betriebsart",
+            "Full power with FIFO queue": "Volle Leistung mit FIFO-Warteschlange",
+            "Dynamic current sharing with FIFO admission": "Dynamische Stromverteilung mit FIFO-Freigabe",
+            "Maximum total current": "Maximaler Gesamtstrom",
+            "Safety reserve": "Sicherheitsreserve",
+            "Minimum current per charging vehicle": "Mindeststrom je ladendem Fahrzeug",
+            "Maximum current per charging vehicle": "Maximalstrom je ladendem Fahrzeug",
+            "Connector ID": "Anschluss-ID",
+            "Number of phases": "Anzahl Phasen",
+            "For safety, enable a wallbox only after its 6 A Smart Charging test returned Accepted.": "Eine Wallbox aus Sicherheitsgründen erst aktivieren, nachdem ihr 6-A-Smart-Charging-Test mit Accepted bestätigt wurde.",
+            "Managed wallboxes": "Verwaltete Wallboxen",
+            "Enabled": "Aktiv",
+            "Instance ID": "Instanz-ID",
+            "Name": "Name",
+            "6 A test Accepted": "6-A-Test Accepted",
+            "Smart Charging safety test": "Smart-Charging-Sicherheitstest",
+            "Charging point instance for test": "Ladepunkt-Instanz für Test",
+            "Send 6 A test limit": "6-A-Testgrenze senden",
+            "Start test charging": "Testladung starten",
+            "Stop test charging": "Testladung stoppen",
+            "Restore 16 A test limit": "16-A-Testgrenze wiederherstellen",
+            "Run control cycle now": "Regelzyklus jetzt ausführen",
+            "Controller status": "Status Lastmanager",
+            "Active charging vehicles": "Aktive Ladevorgänge",
+            "Waiting vehicles": "Wartende Fahrzeuge",
+            "Allocated current": "Verteilter Strom",
+            "Last allocation": "Letzte Stromverteilung"
+        }
+    }
+}
