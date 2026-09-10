@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-class OCPPSolarEdgeLoadManager extends IPSModule
+class OCPPSolarEdgeLoadManagerController extends IPSModule
 {
     private const MODE_FULL_POWER_FIFO = 0;
     private const MODE_DYNAMIC_SHARING = 1;
