@@ -1,12 +1,12 @@
 {
-    "id": "{8ED58A3F-1EAA-4F7E-B71D-674E9C31C54E}",
-    "name": "Dreame Robot",
-    "author": "Smartwerk",
-    "url": "https://github.com/manne83/IPSymcon-Dreame",
+    "id": "{D4975C8E-B1EB-4801-B91F-1BD930C4FA29}",
+    "name": "OCPP SolarEdge Load Manager",
+    "author": "manne83",
+    "url": "https://github.com/manne83/OCPP-SolarEdge-LoadManager",
     "compatibility": {
-        "version": "9.0"
+        "version": "8.0"
     },
-    "version": "0.4",
-    "build": 4,
+    "version": "1.5",
+    "build": 0,
     "date": 0
 }
