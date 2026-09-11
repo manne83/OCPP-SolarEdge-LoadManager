@@ -1,0 +1,79 @@
+{
+    "elements": [
+        {
+            "type": "CheckBox",
+            "name": "Active",
+            "caption": "Active"
+        },
+        {
+            "type": "List",
+            "name": "Robots",
+            "caption": "Robots on the map",
+            "add": true,
+            "delete": true,
+            "columns": [
+                {
+                    "caption": "Robot instance",
+                    "name": "InstanceID",
+                    "width": "300px",
+                    "add": 0,
+                    "edit": {
+                        "type": "SelectInstance",
+                        "validModules": [
+                            "{6B87C506-2B66-48BB-8E1C-EA41DDE8D353}"
+                        ]
+                    }
+                },
+                {
+                    "caption": "Display name",
+                    "name": "Name",
+                    "width": "200px",
+                    "add": "",
+                    "edit": {
+                        "type": "ValidationTextBox"
+                    }
+                },
+                {
+                    "caption": "Marker color",
+                    "name": "Color",
+                    "width": "120px",
+                    "add": "#E53935",
+                    "edit": {
+                        "type": "ValidationTextBox"
+                    }
+                }
+            ]
+        },
+        {
+            "type": "NumberSpinner",
+            "name": "UpdateInterval",
+            "caption": "Map update interval",
+            "suffix": " seconds",
+            "minimum": 30,
+            "maximum": 600
+        },
+        {
+            "type": "Label",
+            "caption": "The first test version displays both live maps in one view. Exact overlay requires calibration because every robot uses its own map coordinate system."
+        }
+    ],
+    "actions": [
+        {
+            "type": "Button",
+            "caption": "Update maps now",
+            "onClick": "DRMM_Update($id);"
+        }
+    ],
+    "status": [
+        {
+            "code": 200,
+            "icon": "error",
+            "caption": "No valid robots configured"
+        },
+        {
+            "code": 201,
+            "icon": "error",
+            "caption": "Map retrieval failed"
+        }
+    ]
+}
